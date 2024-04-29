@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de áreas y cantidad de rectángulos</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        #contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #titulo {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #formularios {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+
+        #etiquetas {
+            margin-bottom: 5px;
+        }
+
+        #entradas {
+            padding: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        #botones {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #botonCalcular {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #botonLimpiar {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultados {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+        }
+
+        #resultadoAreaTriangulo {
+            font-weight: bold;
+        }
+
+        #resultadoAreaRectangulo {
+            font-weight: bold;
+        }
+
+        #resultadoCantidadRectangulos {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="contenedor">
+        <h1 id="titulo">Cálculo de áreas y cantidad de rectángulos</h1>
+
+        <div id="formularios">
+            <h2>Datos del triángulo:</h2>
+            <label id="etiquetas">Base del triángulo (en metros):</label>
+            <input type="number" id="baseTriangulo" name="baseTriangulo" step="0.01" required>
+
+            <label id="etiquetas">Altura del triángulo (en metros):</label>
+            <input type="number" id="alturaTriangulo" name="alturaTriangulo" step="0.01" required>
+
+            <h2>Datos del rectángulo:</h2>
+            <label id="etiquetas">Base del rectángulo (en metros):</label>
+            <input type="number" id="baseRectangulo" name="baseRectangulo" step="0.01" required>
+
+            <label id="etiquetas">Altura del rectángulo (en metros):</label>
+            <input type="number" id="alturaRectangulo" name="alturaRectangulo" step="0.01" required>
+
+            <div id="botones">
+                <button id="botonCalcular">Calcular</button>
+                <button id="botonLimpiar">Limpiar</button>
+            </div>
+        </div>
+
+        <div id="resultados">
+            <p id="resultadoAreaTriangulo"></p>
+            <p id="resultadoAreaRectangulo"></p>
+            <p id="resultadoCantidadRectangulos"></p>
+        </div>
+    </div>
+
+    <script>
+        const botonCalcular = document.getElementById('botonCalcular');
+        const botonLimpiar = document.getElementById('botonLimpiar');
+
+        const baseTriangulo = document.getElementById('baseTriangulo');
+        const alturaTriangulo = document.getElementById('alturaTriangulo');
+        const baseRectangulo = document.getElementById('baseRectangulo');
+        const alturaRectangulo = document.getElementById('alturaRectangulo');
+
+        const resultadoAreaTriangulo = document.getElementById('resultadoAreaTriangulo');
+        const resultadoAreaRectangulo = document.getElementById('resultadoAreaRectangulo');
+        const resultadoCantidadRectangulos = document.getElementById('resultadoCantidadRectangulos');
+
+        botonCalcular.addEventListener('click', calcularAreasYCantidad);
+        botonLimpiar.addEventListener('click', limpiarResultados);
+
+        function calcularAreasYCantidad() {
+            const areaTriangulo = (parseFloat(baseTriangulo.value) * parseFloat(alturaTriangulo.value)) / 2;
+            const areaRectangulo = parseFloat(baseRectangulo.value) * parseFloat(alturaRectangulo.value);
+
+            const cantidadRectangulos = Math.floor(areaTriangulo / areaRectangulo);
+
+            resultadoAreaTriangulo.textContent = `Área del triángulo: ${areaTriangulo.toFixed(2)} m²`;
+            resultadoAreaRectangulo.textContent = `Área del rectángulo: ${areaRectangulo.toFixed(2)} m²`;
+            resultadoCantidadRectangulos.textContent = `Cantidad de rectángulos: ${cantidadRectangulos}`;
+        }
+
+        function limpiarResultados() {
+            baseTriangulo.value = '';
+            alturaTriangulo.value = '';
+            baseRectangulo.value = '';
+            alturaRectangulo.value = '';
+
+            resultadoAreaTriangulo.textContent = '';
+            resultadoAreaRectangulo.textContent = '';
+            resultadoCantidadRectangulos.textContent = '';
+        }
+ 
+    </script>
+</body>
+</html>

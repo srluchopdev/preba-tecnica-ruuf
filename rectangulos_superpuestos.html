@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de áreas y cantidad de paneles solares</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        #contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #titulo {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #formularios {
+            display: flex;
+            flex-direction: column;
+            width: 350px;
+        }
+
+        #etiquetas {
+            margin-bottom: 5px;
+        }
+
+        #entradas {
+            padding: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        #botones {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #botonCalcular {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #botonLimpiar {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultados {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 350px;
+        }
+
+        #resultadoAreaRectangulo1 {
+            font-weight: bold;
+        }
+
+        #resultadoAreaRectangulo2 {
+            font-weight: bold;
+        }
+
+        #resultadoAreaTotal {
+            font-weight: bold;
+        }
+
+        #resultadoAreaPanel {
+            font-weight: bold;
+        }
+
+        #resultadoCantidadPaneles {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="contenedor">
+        <h1 id="titulo">Cálculo de áreas y cantidad de paneles solares</h1>
+
+        <div id="formularios">
+            <h2>Datos del rectángulo 1 (inferior):</h2>
+            <label id="etiquetas">Ancho del rectángulo 1 (en metros):</label>
+            <input type="number" id="anchoRectangulo1" name="anchoRectangulo1" step="0.01" required>
+
+            <label id="etiquetas">Alto del rectángulo 1 (en metros):</label>
+            <input type="number" id="altoRectangulo1" name="altoRectangulo1" step="0.01" required>
+
+            <h2>Datos del rectángulo 2 (superpuesto):</h2>
+            <label id="etiquetas">Ancho del rectángulo 2 (en metros):</label>
+            <input type="number" id="anchoRectangulo2" name="anchoRectangulo2" step="0.01" required>
+
+            <label id="etiquetas">Alto del rectángulo 2 (en metros):</label>
+            <input type="number" id="altoRectangulo2" name="altoRectangulo2" step="0.01" required>
+
+            <h2>Datos del panel solar:</h2>
+            <label id="etiquetas">Ancho del panel solar (en metros):</label>
+            <input type="number" id="anchoPanel" name="anchoPanel" step="0.01" required>
+
+            <label id="etiquetas">Alto del panel solar (en metros):</label>
+            <input type="number" id="altoPanel" name="altoPanel" step="0.01" required>
+
+            <div id="botones">
+                <button id="botonCalcular">Calcular</button>
+                <button id="botonLimpiar">Limpiar</button>
+            </div>
+        </div>
+
+        <div id="resultados">
+            <p id="resultadoAreaRectangulo1"></p>
+            <p id="resultadoAreaRectangulo2"></p>
+            <p id="resultadoAreaTotal"></p>
+            <p id="resultadoAreaPanel"></p>
+            <p id="resultadoCantidadPaneles"></p>
+        </div>
+    </div>
+
+    <script>
+        const botonCalcular = document.getElementById('botonCalcular');
+        const botonLimpiar = document.getElementById('botonLimpiar');
+
+        const anchoRectangulo1 = document.getElementById('anchoRectangulo1');
+        const altoRectangulo1 = document.getElementById('altoRectangulo1');
+        const anchoRectangulo2 = document.getElementById('anchoRectangulo2');
+        const altoRectangulo2 = document.getElementById('altoRectangulo2');
+        const anchoPanel = document.getElementById('anchoPanel');
+        const altoPanel = document.getElementById('altoPanel');
+
+        const resultadoAreaRectangulo1 = document.getElementById('resultadoAreaRectangulo1');
+        const resultadoAreaRectangulo2 = document.getElementById('resultadoAreaRectangulo2');
+        const resultadoAreaTotal = document.getElementById('resultadoAreaTotal');
+        const resultadoAreaPanel = document.getElementById('resultadoAreaPanel');
+        const resultadoCantidadPaneles = document.getElementById('resultadoCantidadPaneles');
+
+        botonCalcular.addEventListener('click', calcularAreasYCantidad);
+        botonLimpiar.addEventListener('click', limpiarResultados);
+
+        function calcularAreasYCantidad() {
+            const areaRectangulo1 = parseFloat(anchoRectangulo1.value) * parseFloat(altoRectangulo1.value);
+            const areaRectangulo2 = parseFloat(anchoRectangulo2.value) * parseFloat(altoRectangulo2.value);
+            const areaTotal = areaRectangulo1 + areaRectangulo2;
+            const areaPanel = parseFloat(anchoPanel.value) * parseFloat(altoPanel.value);
+            const cantidadPaneles = Math.floor(areaTotal / areaPanel);
+
+            resultadoAreaRectangulo1.textContent = `Área del rectángulo 1: ${areaRectangulo1.toFixed(2)} m²`;
+            resultadoAreaRectangulo2.textContent = `Área del rectángulo 2: ${areaRectangulo2.toFixed(2)} m²`;
+            resultadoAreaTotal.textContent = `Área total: ${areaTotal.toFixed(2)} m²`;
+            resultadoAreaPanel.textContent = `Área del panel solar: ${areaPanel.toFixed(2)} m²`;
+            resultadoCantidadPaneles.textContent = `Cantidad de paneles solares: ${cantidadPaneles}`;
+        }
+
+        function limpiarResultados() {
+            anchoRectangulo1.value = '';
+            altoRectangulo1.value = '';
+            anchoRectangulo2.value = '';
+            altoRectangulo2.value = '';
+            anchoPanel.value = '';
+            altoPanel.value = '';
+
+            resultadoAreaRectangulo1.textContent = '';
+            resultadoAreaRectangulo2.textContent = '';
+            resultadoAreaTotal.textContent = '';
+            resultadoAreaPanel.textContent = '';
+            resultadoCantidadPaneles.textContent = '';
+        }
+    </script>
+</body>
+</html>

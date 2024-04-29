@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de paneles solares</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        #contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #titulo {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #formularios {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+
+        #etiquetas {
+            margin-bottom: 5px;
+        }
+
+        #entradas {
+            padding: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        #botones {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #botonCalcular {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #botonLimpiar {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultados {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+        }
+
+        #resultadoAreaTecho {
+            font-weight: bold;
+        }
+
+        #resultadoAreaPanel {
+            font-weight: bold;
+        }
+
+        #resultadoCantidadPaneles {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="contenedor">
+        <h1 id="titulo">Calculadora de paneles solares</h1>
+
+        <div id="formularios">
+            <label id="etiquetas">Ancho del techo (en metros):</label>
+            <input type="number" id="anchoTecho" name="anchoTecho" step="0.01" required>
+
+            <label id="etiquetas">Alto del techo (en metros):</label>
+            <input type="number" id="altoTecho" name="altoTecho" step="0.01" required>
+
+            <label id="etiquetas">Ancho del panel solar (en metros):</label>
+            <input type="number" id="anchoPanel" name="anchoPanel" step="0.01" required>
+
+            <label id="etiquetas">Alto del panel solar (en metros):</label>
+            <input type="number" id="altoPanel" name="altoPanel" step="0.01" required>
+
+            <div id="botones">
+                <button id="botonCalcular">Calcular</button>
+                <button id="botonLimpiar">Limpiar</button>
+            </div>
+        </div>
+
+        <div id="resultados">
+            <p id="resultadoAreaTecho"></p>
+            <p id="resultadoAreaPanel"></p>
+            <p id="resultadoCantidadPaneles"></p>
+        </div>
+    </div>
+
+    <script>
+        const botonCalcular = document.getElementById('botonCalcular');
+        const botonLimpiar = document.getElementById('botonLimpiar');
+
+        const anchoTecho = document.getElementById('anchoTecho');
+        const altoTecho = document.getElementById('altoTecho');
+        const anchoPanel = document.getElementById('anchoPanel');
+        const altoPanel = document.getElementById('altoPanel');
+
+        const resultadoAreaTecho = document.getElementById('resultadoAreaTecho');
+        const resultadoAreaPanel = document.getElementById('resultadoAreaPanel');
+        const resultadoCantidadPaneles = document.getElementById('resultadoCantidadPaneles');
+
+        botonCalcular.addEventListener('click', calcularPanelesSolares);
+        botonLimpiar.addEventListener('click', limpiarResultados);
+
+        function calcularPanelesSolares() {
+            const areaTecho = parseFloat(anchoTecho.value) * parseFloat(altoTecho.value);
+            const areaPanel = parseFloat(anchoPanel.value) * parseFloat(altoPanel.value);
+
+            const cantidadPaneles = Math.floor(areaTecho / areaPanel);
+
+            resultadoAreaTecho.textContent = `Área del techo: ${areaTecho.toFixed(2)} m²`;
+            resultadoAreaPanel.textContent = `Área del panel solar: ${areaPanel.toFixed(2)} m²`;
+            resultadoCantidadPaneles.textContent = `Cantidad de paneles solares: ${cantidadPaneles}`;
+        }
+
+        function limpiarResultados() {
+            anchoTecho.value = '';
+            altoTecho.value = '';
+            anchoPanel.value = '';
+            altoPanel.value = '';
+
+            resultadoAreaTecho.textContent = '';
+            resultadoAreaPanel.textContent = '';
+            resultadoCantidadPaneles.textContent = '';
+        }
+
+    </script>
+</body>
+</html>
